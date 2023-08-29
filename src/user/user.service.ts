@@ -1,4 +1,4 @@
-import { Body, Injectable } from "@nestjs/common";
+import { Body, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/createUser.dto";
 import { User } from "./user.entity";
 import * as bcrypt from 'bcrypt';
@@ -47,6 +47,22 @@ export class UserService {
     }
 
     async getAllUsers(): Promise<User[]> {
-        return User.findAll();
+        return User.findAll({
+            attributes: ['id', 'username', 'email']
+        });
+    }
+
+    async findByUsername(username: string): Promise<User | undefined> {
+        const user = await User.findOne({
+            where: {
+                username: username
+            }
+        });
+
+        if (!user) {
+            throw new NotFoundException('User not found.')
+        }
+
+        return user;
     }
 }
