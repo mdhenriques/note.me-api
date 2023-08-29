@@ -1,6 +1,6 @@
 
 import { Column, DataType, Table, Model } from "sequelize-typescript";
-import { Col } from "sequelize/types/utils";
+
 
 @Table
 export class User extends Model {    

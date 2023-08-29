@@ -7,7 +7,7 @@ import { AuthGuard } from "src/auth/auth.guard";
 
 @Controller('/users')
 export class UserController {
-brave
+
     constructor(private readonly userService: UserService) {}
 
     @Post('signup')
