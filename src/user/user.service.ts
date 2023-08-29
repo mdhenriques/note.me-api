@@ -8,16 +8,9 @@ export class UserService {
 
     async create(newUser: CreateUserDTO): Promise<{ status: string, message: string}>{
         try { 
-            const existingUser = await User.findOne({
-                where: {
-                    email: newUser.email,
-                }
-            })
-            if (existingUser) {
-                return { status: 'error', message: 'User already exists.'}
-            }
             
-            await User.create({newUser});
+            console.log(newUser);
+            await User.create({...newUser});
 
             return { status: 'success', message: 'User created successfully.'}
         } catch (err) {

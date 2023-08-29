@@ -1,5 +1,6 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 import pg from 'pg';
+import { User } from "src/user/user.entity";
 
 export const databaseProviders = [
   {
@@ -18,6 +19,8 @@ export const databaseProviders = [
           }
       }
       });
+
+      sequelize.addModels([ User ])
       await sequelize.sync();
       try {
         await sequelize.authenticate();
