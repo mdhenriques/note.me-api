@@ -65,4 +65,14 @@ export class UserService {
 
         return user;
     }
+
+    async findById(id: number): Promise<User | undefined> {
+        const user = await User.findByPk(id);
+
+        if (!user) {
+            throw new NotFoundException('User not found.')
+        }
+
+        return user;
+    }
 }

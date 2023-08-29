@@ -33,4 +33,12 @@ export class UserController {
 
         return { id: (await user).id, email: (await user).email};
     }
+
+    @UseGuards(AuthGuard)
+    @Get('id/:id')
+    async getUserById(@Param('id') id: number) {
+        const user = this.userService.findById(id);
+
+        return { username: (await user).username, email: (await user).email };
+    }
 }
