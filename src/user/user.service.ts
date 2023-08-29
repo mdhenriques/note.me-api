@@ -22,30 +22,7 @@ export class UserService {
         }
     }
 
-    async login(loginData: LoginUserDTO): Promise<{ status: string, message: string}> {
-        try {
-            const existingUser = await User.findOne({
-                where: {
-                  username: loginData.username,
-                },
-            });
-
-            if(!existingUser) {
-                return { status: 'error', message: 'Invalid username.'};
-            }
-            const validPassword = await bcrypt.compare(loginData.password, existingUser.password);
-
-            if(!validPassword) {
-                return { status: 'error', message: 'Invalid password'};
-            }
-
-            return { status: 'success', message: 'Success!'};
-
-        } catch (err) {
-
-        }
-    }
-
+    
     async getAllUsers(): Promise<User[]> {
         return User.findAll({
             attributes: ['id', 'username', 'email']
