@@ -22,4 +22,11 @@ export class User extends Model {
         allowNull: false,
     })
     password: string;
+
+    @Column({
+        type: DataType.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    })
+    isAdmin: boolean;    
 }
