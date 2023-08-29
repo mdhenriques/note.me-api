@@ -75,4 +75,12 @@ export class UserService {
 
         return user;
     }
+
+    async deleteUser(id: number) {
+        try {
+            (await this.findById(id)).destroy();
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }
