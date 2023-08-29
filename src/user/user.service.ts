@@ -2,7 +2,6 @@ import { Body, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/createUser.dto";
 import { User } from "./user.entity";
 import * as bcrypt from 'bcrypt';
-import { LoginUserDTO } from "./dto/loginUser.dto";
 
 
 @Injectable()
