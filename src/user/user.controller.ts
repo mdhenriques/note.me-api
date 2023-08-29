@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from "@nestjs/common";
+import { Controller, Post, Body, Get } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { User } from "./user.entity";
 import { CreateUserDTO } from "./dto/createUser.dto";
@@ -18,5 +18,10 @@ export class UserController {
         } catch (err) {
             console.log(err);            
         }
-    }    
+    }
+    
+    @Get('all')
+    async getAll(): Promise<User[]> {
+        return this.userService.getAllUsers();
+    }
 }
