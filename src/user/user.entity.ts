@@ -1,5 +1,7 @@
 
-import { Column, DataType, Table, Model } from "sequelize-typescript";
+import { Column, DataType, Table, Model, BelongsToMany } from "sequelize-typescript";
+import { Item } from "src/item/item.entity";
+import { Rating } from "src/rating/rating.entity";
 
 
 @Table
@@ -29,4 +31,7 @@ export class User extends Model {
         defaultValue: false,
     })
     isAdmin: boolean;    
+
+    @BelongsToMany(() => Item, () => Rating)
+    ratedItems: Item[];
 }
