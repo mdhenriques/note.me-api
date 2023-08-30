@@ -1,7 +1,8 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model } from "sequelize-typescript";
+import { Table, BelongsTo, Column, DataType, ForeignKey, Model } from "sequelize-typescript";
 import { Item } from "src/item/item.entity";
 import { User } from "src/user/user.entity";
 
+@Table
 export class Rating extends Model {
 
     @Column({
