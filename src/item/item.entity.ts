@@ -1,4 +1,6 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
+import { User } from "../user/user.entity";
+import { Rating } from "../rating/rating.entity";
 
 @Table
 export class Item extends Model {
@@ -13,4 +15,7 @@ export class Item extends Model {
         allowNull: false,
     })
     description: string;
+
+    @BelongsToMany(() => User, () => Rating)
+    ratedByUsers: User[];
 }
