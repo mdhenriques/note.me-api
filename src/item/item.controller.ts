@@ -18,6 +18,11 @@ export class ItemController {
         return { status: 'success', data: newItem }
     }
 
+    @Get(':itemId/average-rating')
+    async getAverageItemRatings(@Param('itemId') itemId: number): Promise<any> {
+        return this.itemService.getAverageRatings(itemId);
+    }
+
     @Get(':itemId/ratings')
     async getItemRatings(@Param('itemId') itemId: number) {
         return this.itemService.getItemRatings(itemId);

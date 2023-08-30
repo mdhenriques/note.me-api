@@ -12,6 +12,15 @@ export class ItemService {
         return newItem;
     }
 
+    async getAverageRatings(itemId: number): Promise<number> {
+        const ratings = await this.getItemRatings(itemId);
+        const totalRatings = (await ratings).length;
+        const sumOfRatings = ratings.reduce((sum, rating) => sum + rating.value, 0);
+        
+        const average = sumOfRatings / totalRatings;
+        return average;
+    }
+
     async getItemRatings(itemId: number): Promise<Rating[]> {
         const item = await Item.findByPk(itemId);
 
