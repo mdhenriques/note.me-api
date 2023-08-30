@@ -38,9 +38,9 @@ export class ItemService {
     async updateItem(itemId: number, updateItemDTO: UpdateItemDTO): Promise<Item> {
         const itemToUpdate = await Item.findByPk(itemId);
 
-        if (!itemToUpdate) {
+        //if (!itemToUpdate) {
             // Lidar com o item não encontrado
-        }
+        //}
 
         await itemToUpdate.update(updateItemDTO);
         return itemToUpdate;
