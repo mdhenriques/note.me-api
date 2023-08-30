@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 import pg from 'pg';
 import { User } from "src/user/user.entity";
 import { Item } from "src/item/item.entity";
+import { Rating } from "src/rating/rating.entity";
 
 export const databaseProviders = [
   {
@@ -21,7 +22,7 @@ export const databaseProviders = [
       }
       });
 
-      sequelize.addModels([ User, Item ])
+      sequelize.addModels([ User, Item, Rating ])
       await sequelize.sync();
       try {
         await sequelize.authenticate();
