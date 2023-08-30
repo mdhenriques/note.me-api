@@ -9,4 +9,10 @@ export class ItemService {
         const newItem = await Item.create({...createItemDTO});
         return newItem;
     }
+
+    async getAllItems(): Promise<Item[]> {
+        return Item.findAll({
+            attributes: ['name', 'description']
+        });
+    }
 }

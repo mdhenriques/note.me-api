@@ -1,7 +1,8 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { ItemService } from "./item.service";
 import { CreateItemDTO } from "./dto/createItem.dto";
 import { AuthGuard } from "src/auth/auth.guard";
+import { Item } from "./item.entity";
 
 @Controller('items')
 export class ItemController {
@@ -14,5 +15,11 @@ export class ItemController {
         
         const newItem = await this.itemService.createItem(createItemDTO);
         return { status: 'success', data: newItem }
+    }
+
+    @Get('all')
+    async getAll(): Promise<Item[]> {
+        return await this.itemService.getAllItems();
+        
     }
 }
