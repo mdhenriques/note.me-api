@@ -18,6 +18,11 @@ export class ItemController {
         return { status: 'success', data: newItem }
     }
 
+    @Get(':itemId/ratings')
+    async getItemRatings(@Param('itemId') itemId: number) {
+        return this.itemService.getItemRatings(itemId);
+    }
+
     //@UseGuards(AuthGuard)
     @Delete(':id')
     async deleteItem(@Param('id') id: number): Promise<any> {

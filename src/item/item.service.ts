@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CreateItemDTO } from "./dto/createItem.dto";
 import { Item } from "./item.entity";
 import { UpdateItemDTO } from "./dto/updateItem.dto";
+import { Rating } from "../rating/rating.entity";
 
 @Injectable()
 export class ItemService {
@@ -9,6 +10,18 @@ export class ItemService {
     async createItem(createItemDTO: CreateItemDTO): Promise<Item> {
         const newItem = await Item.create({...createItemDTO});
         return newItem;
+    }
+
+    async getItemRatings(itemId: number): Promise<Rating[]> {
+        const item = await Item.findByPk(itemId);
+
+        const ratings = await Rating.findAll({
+            where: {
+                itemId: item.id,
+            },
+        });
+
+        return ratings;
     }
 
     async getAllItems(): Promise<Item[]> {
