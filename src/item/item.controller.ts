@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { ItemService } from "./item.service";
 import { CreateItemDTO } from "./dto/createItem.dto";
-import { AuthGuard } from "src/auth/auth.guard";
 import { Item } from "./item.entity";
 import { UpdateItemDTO } from "./dto/updateItem.dto";
 
