@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CreateItemDTO } from "./dto/createItem.dto";
 import { Item } from "./item.entity";
+import { UpdateItemDTO } from "./dto/updateItem.dto";
 
 @Injectable()
 export class ItemService {
@@ -32,6 +33,16 @@ export class ItemService {
             }
         });
         (await itemToBeDeleted).destroy();
-        //return 'oi';
+    }
+
+    async updateItem(itemId: number, updateItemDTO: UpdateItemDTO): Promise<Item> {
+        const itemToUpdate = await Item.findByPk(itemId);
+
+        if (!itemToUpdate) {
+            // Lidar com o item não encontrado
+        }
+
+        await itemToUpdate.update(updateItemDTO);
+        return itemToUpdate;
     }
 }

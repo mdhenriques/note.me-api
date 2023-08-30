@@ -1,15 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { ItemService } from "./item.service";
 import { CreateItemDTO } from "./dto/createItem.dto";
 import { AuthGuard } from "src/auth/auth.guard";
 import { Item } from "./item.entity";
+import { UpdateItemDTO } from "./dto/updateItem.dto";
 
 @Controller('items')
 export class ItemController {
 
     constructor(private readonly itemService: ItemService) {}
 
-    @UseGuards(AuthGuard)
+    //@UseGuards(AuthGuard)
     @Post()
     async createItem(@Body() createItemDTO: CreateItemDTO): Promise<any> {
         
@@ -24,6 +25,13 @@ export class ItemController {
         return 'Item deleted successfully';
     }
 
+    //@UseGuards(AuthGuard)
+    @Put(':id')
+    async updateItem(@Param('id') itemId: number, @Body() updateItemDTO: UpdateItemDTO): Promise<any> {
+        const updatedItem = await this.itemService.updateItem(itemId, updateItemDTO);
+        return { status: 'success', data: updatedItem };
+    }
+
     @Get('all')
     async getAll(): Promise<Item[]> {
         return await this.itemService.getAllItems();        
@@ -33,4 +41,6 @@ export class ItemController {
     async getItemByName(@Param('name') name: string): Promise<Item> {
         return await this.itemService.getItemByName(name);
     }
+
+    
 }
