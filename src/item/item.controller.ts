@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { ItemService } from "./item.service";
 import { CreateItemDTO } from "./dto/createItem.dto";
 import { AuthGuard } from "src/auth/auth.guard";
@@ -15,6 +15,13 @@ export class ItemController {
         
         const newItem = await this.itemService.createItem(createItemDTO);
         return { status: 'success', data: newItem }
+    }
+
+    //@UseGuards(AuthGuard)
+    @Delete(':id')
+    async deleteItem(@Param('id') id: number): Promise<any> {
+        await this.itemService.deleteItemById(id);
+        return 'Item deleted successfully';
     }
 
     @Get('all')

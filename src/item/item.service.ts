@@ -24,4 +24,14 @@ export class ItemService {
             attributes: ['name', 'description']
         });
     }
+
+    async deleteItemById(idToBeDeleted: number): Promise<any> {
+        const itemToBeDeleted = Item.findOne({
+            where: {
+                id: idToBeDeleted
+            }
+        });
+        (await itemToBeDeleted).destroy();
+        //return 'oi';
+    }
 }
