@@ -15,4 +15,13 @@ export class ItemService {
             attributes: ['name', 'description']
         });
     }
+
+    async getItemByName(wantedName: string): Promise<Item> {
+        return Item.findOne({
+            where: {
+                name: wantedName
+            },
+            attributes: ['name', 'description']
+        });
+    }
 }

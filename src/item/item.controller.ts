@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
 import { ItemService } from "./item.service";
 import { CreateItemDTO } from "./dto/createItem.dto";
 import { AuthGuard } from "src/auth/auth.guard";
@@ -19,7 +19,11 @@ export class ItemController {
 
     @Get('all')
     async getAll(): Promise<Item[]> {
-        return await this.itemService.getAllItems();
-        
+        return await this.itemService.getAllItems();        
+    }
+
+    @Get(':name')
+    async getItemByName(@Param('name') name: string): Promise<Item> {
+        return await this.itemService.getItemByName(name);
     }
 }
