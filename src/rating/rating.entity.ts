@@ -1,18 +1,11 @@
 import { Table, BelongsTo, Column, DataType, ForeignKey, Model } from "sequelize-typescript";
-import { Item } from "src/item/item.entity";
+import { Posts } from "src/post/post.entity";
 import { User } from "src/user/user.entity";
 
 @Table
 export class Rating extends Model {
 
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-        validate: {
-            min: 1,
-            max: 5,
-        },
-    })
+    @Column
     value: number;
 
     @ForeignKey(() => User)
@@ -22,10 +15,10 @@ export class Rating extends Model {
     @BelongsTo(() => User)
     user: User;
 
-    @ForeignKey(() => Item)
+    @ForeignKey(() => Posts)
     @Column
-    itemId: number;
+    postId: number;
 
-    @BelongsTo(() => Item)
-    item: Item;
+    @BelongsTo(() => Posts)
+    Post: Posts;
 }

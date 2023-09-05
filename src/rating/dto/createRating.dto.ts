@@ -11,5 +11,5 @@ export class CreateRatingDTO {
     userId: number;
 
     @IsNotEmpty()
-    itemId: number;
+    postId: number;
 }

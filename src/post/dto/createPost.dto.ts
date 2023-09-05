@@ -1,10 +1,10 @@
 import { IsNotEmpty } from "class-validator";
 
-export class CreateItemDTO {
+export class CreatePostDTO {
 
     @IsNotEmpty({ message: 'Item must have a name.'})
-    name: string;
+    title: string;
 
     @IsNotEmpty({ message: 'Item must have a description'})
-    description: string;    
+    content: string;    
 }

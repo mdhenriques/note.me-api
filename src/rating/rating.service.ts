@@ -6,7 +6,9 @@ import { Rating } from "./rating.entity";
 export class RatingService {
 
     async createRating(createRating: CreateRatingDTO): Promise<Rating> {
+        console.log(createRating);
         const newRating = await Rating.create({...createRating});
+        console.log(createRating)
         return newRating;
-    }
+    } 
 }

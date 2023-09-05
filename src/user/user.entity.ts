@@ -1,6 +1,6 @@
 
 import { Column, DataType, Table, Model, BelongsToMany } from "sequelize-typescript";
-import { Item } from "src/item/item.entity";
+import { Item } from "src/post/item.entity";
 import { Rating } from "src/rating/rating.entity";
 
 

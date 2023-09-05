@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { ItemService } from "src/item/item.service";
+import { PostService } from "src/post/post.service";
 import { RatingService } from "./rating.service";
 import { CreateRatingDTO } from "./dto/createRating.dto";
 

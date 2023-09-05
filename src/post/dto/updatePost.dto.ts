@@ -1,9 +1,9 @@
 import { IsNotEmpty } from "class-validator";
 
-export class UpdateItemDTO {
+export class UpdatePostDTO {
     @IsNotEmpty({ message: 'Item must have a name.'})
-    name: string;
+    title: string;
 
     @IsNotEmpty({ message: 'Item must have a description'})
-    description: string;   
+    content: string;   
 }
