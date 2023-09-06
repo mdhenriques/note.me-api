@@ -17,16 +17,6 @@ export class PostController {
         return { status: 'success', data: newPost }
     }
 
-    @Get(':postId/average-rating')
-    async getAveragePostRatings(@Param('postId') postId: number): Promise<any> {
-        return this.postService.getAverageRatings(postId);
-    }
-
-    @Get(':postId/ratings')
-    async getPostRatings(@Param('postId') postId: number) {
-        return this.postService.getPostRatings(postId);
-    }
-
     //@UseGuards(AuthGuard)
     @Delete(':id')
     async deletePost(@Param('id') id: number): Promise<any> {
@@ -49,6 +39,11 @@ export class PostController {
     @Get(':name')
     async getPostByName(@Param('name') name: string): Promise<Posts> {
         return await this.postService.getPostByName(name);
+    }
+
+    @Get(':userId')
+    async getPostByUserId(@Param('userId') userId: number): Promise<Posts[]> {
+        return await this.postService.getPostByUserId(userId);   
     }
 
     
