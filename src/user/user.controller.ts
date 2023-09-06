@@ -3,7 +3,6 @@ import { UserService } from "./user.service";
 import { User } from "./user.entity";
 import { CreateUserDTO } from "./dto/createUser.dto";
 import { AuthGuard } from "../auth/auth.guard";
-import { Rating } from "../rating/rating.entity";
 
 @Controller('/users')
 export class UserController {
@@ -20,11 +19,6 @@ export class UserController {
         }
     }
 
-    @Get(':userId/ratings')
-    async getUserRatings(@Param('userId') userId: number): Promise<Rating[]> {
-        return this.userService.getUserRatings(userId);
-    }
-    
     @UseGuards(AuthGuard)
     @Get('all')
     async getAll(): Promise<User[]> {

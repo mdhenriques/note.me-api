@@ -14,7 +14,7 @@ export class PostController {
     async createPost(@Body() createPostDTO: CreatePostDTO): Promise<any> {
         
         const newPost = await this.postService.createPost(createPostDTO);
-        return { status: 'success', data: newPost }
+        return { status: 'success', data: newPost }        
     }
 
     //@UseGuards(AuthGuard)
@@ -31,17 +31,8 @@ export class PostController {
         return { status: 'success', data: updatedPost };
     }
 
-    @Get('all')
-    async getAll(): Promise<Posts[]> {
-        return await this.postService.getAllPosts();        
-    }
 
-    @Get(':name')
-    async getPostByName(@Param('name') name: string): Promise<Posts> {
-        return await this.postService.getPostByName(name);
-    }
-
-    @Get(':userId')
+    @Get('user/:userId')
     async getPostByUserId(@Param('userId') userId: number): Promise<Posts[]> {
         return await this.postService.getPostByUserId(userId);   
     }
