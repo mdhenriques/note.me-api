@@ -1,9 +1,16 @@
-import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import { User } from "../user/user.entity";
-import { Rating } from "../rating/rating.entity";
 
 @Table
 export class Posts extends Model {
+
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    userId: number;
+
     @Column({
         type: DataType.STRING,
         allowNull: false,
@@ -16,6 +23,6 @@ export class Posts extends Model {
     })
     content: string;
 
-    @BelongsToMany(() => User, () => Rating)
-    ratedByUsers: User[];
+
+
 }
