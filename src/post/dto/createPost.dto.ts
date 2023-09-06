@@ -2,6 +2,8 @@ import { IsNotEmpty } from "class-validator";
 
 export class CreatePostDTO {
 
+    userId: number;
+
     @IsNotEmpty({ message: 'Post must have a name.'})
     title: string;
 
