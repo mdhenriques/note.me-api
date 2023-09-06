@@ -3,18 +3,18 @@ import { User } from "../user/user.entity";
 import { Rating } from "../rating/rating.entity";
 
 @Table
-export class Item extends Model {
+export class Posts extends Model {
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-    name: string;
+    title: string;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
-    description: string;
+    content: string;
 
     @BelongsToMany(() => User, () => Rating)
     ratedByUsers: User[];

@@ -21,8 +21,8 @@ export class PostService {
         return average;
     }
 
-    async getPostRatings(itemId: number): Promise<Rating[]> {
-        const post = await Posts.findByPk(itemId);
+    async getPostRatings(postId: number): Promise<Rating[]> {
+        const post = await Posts.findByPk(postId);
 
         const ratings = await Rating.findAll({
             where: {
@@ -60,8 +60,8 @@ export class PostService {
     async updatePost(postId: number, updatePostDTO: UpdatePostDTO): Promise<Posts> {
         const postToUpdate = await Posts.findByPk(postId);
 
-        //if (!itemToUpdate) {
-            // Lidar com o item não encontrado
+        //if (!postToUpdate) {
+            // Lidar com o post não encontrado
         //}
 
         await postToUpdate.update(updatePostDTO);

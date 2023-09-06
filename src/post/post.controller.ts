@@ -1,54 +1,54 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
-import { ItemService } from "./post.service";
-import { CreateItemDTO } from "./dto/createItem.dto";
-import { Item } from "./post.entity";
-import { UpdateItemDTO } from "./dto/updateItem.dto";
+import { PostService } from "./post.service";
+import { CreatePostDTO } from "./dto/createPost.dto";
+import { Posts } from "./post.entity";
+import { UpdatePostDTO } from "./dto/updatePost.dto";
 
-@Controller('items')
-export class ItemController {
+@Controller('posts')
+export class PostController {
 
-    constructor(private readonly itemService: ItemService) {}
+    constructor(private readonly postService: PostService) {}
 
     //@UseGuards(AuthGuard)
     @Post()
-    async createItem(@Body() createItemDTO: CreateItemDTO): Promise<any> {
+    async createPost(@Body() createPostDTO: CreatePostDTO): Promise<any> {
         
-        const newItem = await this.itemService.createItem(createItemDTO);
-        return { status: 'success', data: newItem }
+        const newPost = await this.postService.createPost(createPostDTO);
+        return { status: 'success', data: newPost }
     }
 
-    @Get(':itemId/average-rating')
-    async getAverageItemRatings(@Param('itemId') itemId: number): Promise<any> {
-        return this.itemService.getAverageRatings(itemId);
+    @Get(':postId/average-rating')
+    async getAveragePostRatings(@Param('postId') postId: number): Promise<any> {
+        return this.postService.getAverageRatings(postId);
     }
 
-    @Get(':itemId/ratings')
-    async getItemRatings(@Param('itemId') itemId: number) {
-        return this.itemService.getItemRatings(itemId);
+    @Get(':postId/ratings')
+    async getPostRatings(@Param('postId') postId: number) {
+        return this.postService.getPostRatings(postId);
     }
 
     //@UseGuards(AuthGuard)
     @Delete(':id')
-    async deleteItem(@Param('id') id: number): Promise<any> {
-        await this.itemService.deleteItemById(id);
-        return 'Item deleted successfully';
+    async deletePost(@Param('id') id: number): Promise<any> {
+        await this.postService.deletePostById(id);
+        return 'Post deleted successfully';
     }
 
     //@UseGuards(AuthGuard)
     @Put(':id')
-    async updateItem(@Param('id') itemId: number, @Body() updateItemDTO: UpdateItemDTO): Promise<any> {
-        const updatedItem = await this.itemService.updateItem(itemId, updateItemDTO);
-        return { status: 'success', data: updatedItem };
+    async updatePost(@Param('id') postId: number, @Body() updatePostDTO: UpdatePostDTO): Promise<any> {
+        const updatedPost = await this.postService.updatePost(postId, updatePostDTO);
+        return { status: 'success', data: updatedPost };
     }
 
     @Get('all')
-    async getAll(): Promise<Item[]> {
-        return await this.itemService.getAllItems();        
+    async getAll(): Promise<Posts[]> {
+        return await this.postService.getAllPosts();        
     }
 
     @Get(':name')
-    async getItemByName(@Param('name') name: string): Promise<Item> {
-        return await this.itemService.getItemByName(name);
+    async getPostByName(@Param('name') name: string): Promise<Posts> {
+        return await this.postService.getPostByName(name);
     }
 
     
