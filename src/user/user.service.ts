@@ -20,9 +20,6 @@ export class UserService {
             return { status: 'error', message: 'An error occurred while creating the user.'}
         }
     }
-
-
-
     
     async getAllUsers(): Promise<User[]> {
         return User.findAll({
