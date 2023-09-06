@@ -2,7 +2,6 @@ import { Body, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/createUser.dto";
 import { User } from "./user.entity";
 import * as bcrypt from 'bcrypt';
-import { Rating } from "src/rating/rating.entity";
 
 
 @Injectable()
@@ -22,17 +21,7 @@ export class UserService {
         }
     }
 
-    async getUserRatings(userId: number): Promise<Rating[]> {
-        const user = User.findByPk(userId);
 
-        const ratings = Rating.findAll({
-            where: {
-                userId: (await user).id,
-            }
-        })
-
-        return ratings;
-    }
 
     
     async getAllUsers(): Promise<User[]> {
