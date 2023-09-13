@@ -66,8 +66,8 @@ export class PostController {
       }
     }
 
-    @Get('user/:userId')
-    @ApiOkResponse({ description: 'Post has been successfully updated' })
+    @Get(':userId')
+    @ApiOkResponse({ description: 'Posts were received successfully' })
     @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
     async getPostByUserId(@Param('userId') userId: number): Promise<Posts[]> {
         try {
