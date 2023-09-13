@@ -7,17 +7,16 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
 
-    async create(newUser: CreateUserDTO): Promise<{ status: string, message: string}>{
+    async create(newUser: CreateUserDTO): Promise<User>{
         try {                  
             const saltOrRounds = 10;
             newUser.password = await bcrypt.hash(newUser.password, saltOrRounds);
-            await User.create({...newUser});
+            return await User.create({...newUser});
 
-            return { status: 'success', message: 'User created successfully.'}
-
+            
         } catch (err) {            
             console.error('Error creating user: ', err);
-            return { status: 'error', message: 'An error occurred while creating the user.'}
+            
         }
     }
     
