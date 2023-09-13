@@ -53,7 +53,7 @@ export class PostController {
     @ApiOkResponse({ description: 'Post has been successfully updated' })
     @ApiNotFoundResponse({ description: 'Post not found' })
     @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
-    async updatePost(@Param('id') postId: number, @Body() updatePostDTO: UpdatePostDTO): Promise<any> {
+    async updatePost(@Param('id') postId: number, @Body() updatePostDTO: UpdatePostDTO): Promise<{ status: string, data: Posts}> {
       try {
         const updatedPost = await this.postService.updatePost(postId, updatePostDTO);
   
@@ -67,7 +67,20 @@ export class PostController {
     }
 
     @Get('user/:userId')
+    @ApiOkResponse({ description: 'Post has been successfully updated' })
+    @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
     async getPostByUserId(@Param('userId') userId: number): Promise<Posts[]> {
-        return await this.postService.getPostByUserId(userId);   
+        try {
+            const posts = await this.postService.getPostByUserId(userId);
+
+            if(!posts || posts.length === 0) {
+                return [];
+            }
+
+            return posts;
+        } catch (err) {
+            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+         
     }    
 }
