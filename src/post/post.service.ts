@@ -11,7 +11,6 @@ export class PostService {
         return newPost;
     }
 
-
     async deletePostById(idToBeDeleted: number): Promise<any> {
         const PostToBeDeleted = Posts.findOne({
             where: {
@@ -23,7 +22,6 @@ export class PostService {
 
     async updatePost(postId: number, updatePostDTO: UpdatePostDTO): Promise<Posts> {
         const postToUpdate = await Posts.findByPk(postId);
-
         await postToUpdate.update(updatePostDTO);
         return postToUpdate;
     }

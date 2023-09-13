@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { PostService } from "./post.service";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
@@ -7,20 +7,17 @@ import { UpdatePostDTO } from "./dto/updatePost.dto";
 @Controller('posts')
 export class PostController {
 
-    constructor(private readonly postService: PostService) {}
+    constructor(private readonly postService: PostService) {}    
     
-    @Post()
-    @HttpCode(201)
-    async createPost(@Body() createPostDTO: CreatePostDTO): Promise<{ status: string, data: Posts}> {
-        
-        const newPost = await this.postService.createPost(createPostDTO);
-        return { status: 'success', data: newPost };        
+    @Post()    
+    async createPost(@Body() createPostDTO: CreatePostDTO): Promise<Posts> {
+        return await this.postService.createPost(createPostDTO);                    
     }
     
+    @HttpCode(204)
     @Delete(':id')
-    async deletePost(@Param('id') id: number): Promise<any> {
-        await this.postService.deletePostById(id);
-        return 'Post deleted successfully';
+    async deletePost(@Param('id') id: number): Promise<void> {
+        await this.postService.deletePostById(id);        
     }
     
     @Put(':id')
