@@ -3,7 +3,9 @@ import { PostService } from "./post.service";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
 import { UpdatePostDTO } from "./dto/updatePost.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('posts')
 @Controller('posts')
 export class PostController {
 
