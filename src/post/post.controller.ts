@@ -3,7 +3,7 @@ import { PostService } from "./post.service";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
 import { UpdatePostDTO } from "./dto/updatePost.dto";
-import { ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiInternalServerErrorResponse } from "@nestjs/swagger";
+import { ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiInternalServerErrorResponse, ApiOkResponse } from "@nestjs/swagger";
 
 @ApiTags('posts')
 @Controller('posts')
@@ -50,9 +50,20 @@ export class PostController {
     }
     
     @Put(':id')
+    @ApiOkResponse({ description: 'Post has been successfully updated' })
+    @ApiNotFoundResponse({ description: 'Post not found' })
+    @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
     async updatePost(@Param('id') postId: number, @Body() updatePostDTO: UpdatePostDTO): Promise<any> {
+      try {
         const updatedPost = await this.postService.updatePost(postId, updatePostDTO);
+  
+        if (!updatedPost) {
+          throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+        }  
         return { status: 'success', data: updatedPost };
+      } catch (error) {
+        throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
 
     @Get('user/:userId')
