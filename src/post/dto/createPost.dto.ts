@@ -10,11 +10,17 @@ export class CreatePostDTO {
     @IsNotEmpty({ message: 'Post must have a userId. '})
     userId: number;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Posts title',
+        type: String
+    })
     @IsNotEmpty({ message: 'Post must have a name.'})
     title: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Posts content',
+        type: String
+    })
     @IsNotEmpty({ message: 'Post must have a description'})
     content: string;    
 }
