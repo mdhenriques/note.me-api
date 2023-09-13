@@ -1,9 +1,14 @@
 import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import { User } from "../user/user.entity";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Table
 export class Posts extends Model {
 
+    @ApiProperty({
+        description: 'Id of post creator',
+        type: Number
+    })
     @ForeignKey(() => User)
     @Column({
         type: DataType.INTEGER,
@@ -11,12 +16,20 @@ export class Posts extends Model {
     })
     userId: number;
 
+    @ApiProperty({
+        description: 'Posts title',
+        type: String
+    })
     @Column({
         type: DataType.STRING,
         allowNull: false,
     })
     title: string;
 
+    @ApiProperty({
+        description: 'Posts content',
+        type: String
+    })
     @Column({
         type: DataType.STRING,
         allowNull: false,

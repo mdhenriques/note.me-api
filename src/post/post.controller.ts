@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { PostService } from "./post.service";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
 import { UpdatePostDTO } from "./dto/updatePost.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiInternalServerErrorResponse } from "@nestjs/swagger";
 
 @ApiTags('posts')
 @Controller('posts')
@@ -11,15 +11,42 @@ export class PostController {
 
     constructor(private readonly postService: PostService) {}    
     
-    @Post()    
-    async createPost(@Body() createPostDTO: CreatePostDTO): Promise<Posts> {
-        return await this.postService.createPost(createPostDTO);                    
+    @HttpCode(HttpStatus.CREATED)
+    @Post()
+    @ApiCreatedResponse({ 
+        description: 'Post has been successfully created.',
+        type: Posts
+    })
+    @ApiBadRequestResponse({ description: 'Bad Request' })  
+    @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })  
+    async createPost(@Body() createPostDTO: CreatePostDTO): Promise<{ message: string, data: Posts}> {
+        try {
+            const newPost = await this.postService.createPost(createPostDTO)
+
+            if (!newPost) {
+                throw new HttpException('Failed to create post', HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return { message: 'Post has been successfully created.', data: newPost };
+        } catch (err) {
+            throw new HttpException('Bad Request', HttpStatus.BAD_REQUEST);
+        }
     }
     
-    @HttpCode(204)
     @Delete(':id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @ApiNoContentResponse({ description: 'Post has been successfully deleted' })
+    @ApiNotFoundResponse({ description: 'Post not found' })
+    @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
     async deletePost(@Param('id') id: number): Promise<void> {
-        await this.postService.deletePostById(id);        
+        try {
+            const deleted = await this.postService.deletePostById(id);
+      
+            if (!deleted) {
+              throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
+            }
+        } catch (error) {
+            throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+        }      
     }
     
     @Put(':id')
