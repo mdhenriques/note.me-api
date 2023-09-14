@@ -2,12 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
 import { UpdatePostDTO } from "./dto/updatePost.dto";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class PostService {
 
-    async createPost(createPostDTO: CreatePostDTO): Promise<Posts> {
-        const newPost = await Posts.create({...createPostDTO});
+    async createPost(userId: number, createPostDTO: CreatePostDTO): Promise<Posts> {
+               
+        const newPost = await Posts.create({...createPostDTO, userId});
         return newPost;
     }
 

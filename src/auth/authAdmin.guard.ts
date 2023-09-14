@@ -25,7 +25,9 @@ import {
             secret: jwtConstants.secret
           }
         );
-        
+        if(!payload.isAdmin) {
+            throw new UnauthorizedException('You are not authorized as an admin');
+        }
         
         request['user'] = payload;
       } catch {

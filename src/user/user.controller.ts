@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, UseGuards, Param, Delete, InternalServerEr
 import { UserService } from "./user.service";
 import { User } from "./user.entity";
 import { CreateUserDTO } from "./dto/createUser.dto";
-import { AuthGuard } from "../auth/auth.guard";
+import { AuthAdminGuard } from "../auth/authAdmin.guard";
 import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiTags } from "@nestjs/swagger";
 
 @ApiTags('users')
@@ -26,13 +26,13 @@ export class UserController {
         }
     }
 
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthAdminGuard)
     @Get('all')
     async getAll(): Promise<User[]> {
         return await this.userService.getAllUsers();
     }
 
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthAdminGuard)
     @Get(':username')
     async getUserByUsername(@Param('username') username: string): Promise<{ id: number, email: string }> {
         const user = await this.userService.findByUsername(username);
@@ -40,7 +40,7 @@ export class UserController {
         return { id: (await user).id, email: (await user).email};
     }
 
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthAdminGuard)
     @Get('id/:id')
     async getUserById(@Param('id') id: number) {
         const user = await this.userService.findById(id);
@@ -48,7 +48,7 @@ export class UserController {
         return { username: (await user).username, email: (await user).email };
     }
 
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthAdminGuard)
     @Delete(':id')
     async deleteUser(@Param('id') id: number): Promise<string> {
         await this.userService.deleteUser(id);

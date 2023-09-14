@@ -3,12 +3,7 @@ import { IsNotEmpty } from "class-validator";
 
 export class CreatePostDTO {
 
-    @ApiProperty({
-        description: 'Id of post creator',
-        type: Number
-    })
-    @IsNotEmpty({ message: 'Post must have a userId. '})
-    userId: number;
+    
 
     @ApiProperty({
         description: 'Posts title',

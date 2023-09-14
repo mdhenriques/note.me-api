@@ -1,16 +1,17 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Post, Put, Req, UseGuards } from "@nestjs/common";
 import { PostService } from "./post.service";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
 import { UpdatePostDTO } from "./dto/updatePost.dto";
 import { ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiInternalServerErrorResponse, ApiOkResponse } from "@nestjs/swagger";
+import { CustomRequest } from '../middlewares/jwt.middleware'
 
 @ApiTags('posts')
 @Controller('posts')
 export class PostController {
 
     constructor(private readonly postService: PostService) {}    
-    
+
     @HttpCode(HttpStatus.CREATED)
     @Post()
     @ApiCreatedResponse({ 
@@ -19,15 +20,18 @@ export class PostController {
     })
     @ApiBadRequestResponse({ description: 'Bad Request' })  
     @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })  
-    async createPost(@Body() createPostDTO: CreatePostDTO): Promise<{ message: string, data: Posts}> {
-        try {
-            const newPost = await this.postService.createPost(createPostDTO)
+    async createPost(@Body() createPostDTO: CreatePostDTO, @Req() req: CustomRequest): Promise<{ message: string, data: Posts}> {
+        try {           
+            const userId = req.userId;
+            console.log(userId);
+            const newPost = await this.postService.createPost(userId ,createPostDTO)
 
             if (!newPost) {
                 throw new HttpException('Failed to create post', HttpStatus.INTERNAL_SERVER_ERROR);
             }
             return { message: 'Post has been successfully created.', data: newPost };
         } catch (err) {
+            console.log(err);
             throw new HttpException('Bad Request', HttpStatus.BAD_REQUEST);
         }
     }
