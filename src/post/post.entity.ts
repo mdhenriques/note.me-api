@@ -2,8 +2,18 @@ import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from "seque
 import { User } from "../user/user.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
+enum PostStatus {
+    URGENTE = 'urgente',
+    BACKLOG = 'backlog',
+    PENDENTE = 'pendente',
+    CONCLUIDA = 'concluida',
+  }
+
+
+
 @Table
 export class Posts extends Model {
+
 
     @ApiProperty({
         description: 'Id of post creator',
@@ -37,5 +47,17 @@ export class Posts extends Model {
     content: string;
 
 
+    @ApiProperty({
+        description: 'Post status',
+        enum: PostStatus,
+        default: PostStatus.PENDENTE,
+        type: String,
+    })
+    @Column({
+        type: DataType.ENUM(PostStatus.URGENTE, PostStatus.BACKLOG, PostStatus.PENDENTE, PostStatus.CONCLUIDA),
+        defaultValue: PostStatus.PENDENTE,
+        allowNull: false,
+    })
+    status: PostStatus;
 
 }
