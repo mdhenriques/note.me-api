@@ -1,8 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
-import { UpdatePostDTO } from "./dto/updatePost.dto";
 import { JwtService } from "@nestjs/jwt";
+
+enum PostStatus {
+    URGENTE = 'urgente',
+    BACKLOG = 'backlog',
+    PENDENTE = 'pendente',
+    CONCLUIDA = 'concluida',
+  }
 
 @Injectable()
 export class PostService {
@@ -35,12 +41,6 @@ export class PostService {
         return 'deleted';
     }
 
-    async updatePost(postId: number, updatePostDTO: UpdatePostDTO): Promise<Posts> {
-        const postToUpdate = await Posts.findByPk(postId);
-        await postToUpdate.update(updatePostDTO);
-        return postToUpdate;
-    }
-
     async getPostByUserId(userId: number): Promise<Posts[]> {
         const userPosts = Posts.findAll({
             where: {
@@ -49,5 +49,11 @@ export class PostService {
         });
 
         return userPosts;
+    }
+
+    async updatePostStatus(postId: number, postStatus: PostStatus): Promise<void> {
+        const postToUpdate = await Posts.findByPk(postId);
+        postToUpdate.status = postStatus;
+        await postToUpdate.save();
     }
 }

@@ -2,13 +2,23 @@ import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Not
 import { PostService } from "./post.service";
 import { CreatePostDTO } from "./dto/createPost.dto";
 import { Posts } from "./post.entity";
-import { UpdatePostDTO } from "./dto/updatePost.dto";
 import { ApiCreatedResponse, ApiTags, ApiBadRequestResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiInternalServerErrorResponse, ApiOkResponse } from "@nestjs/swagger";
 import { CustomRequest } from '../middlewares/jwt.middleware'
+
+
+enum PostStatus {
+    URGENTE = 'urgente',
+    BACKLOG = 'backlog',
+    PENDENTE = 'pendente',
+    CONCLUIDA = 'concluida',
+  }
+
 
 @ApiTags('posts')
 @Controller('posts')
 export class PostController {
+
+  
 
     constructor(private readonly postService: PostService) {}    
 
@@ -63,22 +73,6 @@ export class PostController {
         }
     }
     
-    @Put(':id')
-    @ApiOkResponse({ description: 'Post has been successfully updated' })
-    @ApiNotFoundResponse({ description: 'Post not found' })
-    @ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
-    async updatePost(@Param('id') postId: number, @Body() updatePostDTO: UpdatePostDTO): Promise<{ status: string, data: Posts}> {
-      try {
-        const updatedPost = await this.postService.updatePost(postId, updatePostDTO);
-  
-        if (!updatedPost) {
-          throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
-        }  
-        return { status: 'success', data: updatedPost };
-      } catch (error) {
-        throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    }
 
     @Get()
     @ApiOkResponse({ description: 'Posts were received successfully' })
@@ -98,4 +92,9 @@ export class PostController {
         }
          
     }    
+
+    @Put(':id/:status')
+    async updatePostStatus(@Param('id') userId: number, @Param('status') postStatus: PostStatus) {
+        const updatedPost = await this.postService.updatePostStatus(userId, postStatus)
+    }
 }

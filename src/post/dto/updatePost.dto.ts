@@ -9,7 +9,7 @@ enum PostStatus {
   }
 
 
-export class UpdatePostDTO {
+export class UpdatePostStatusDTO {
         
 
     @IsNotEmpty()
