@@ -7,19 +7,32 @@ import { JwtService } from "@nestjs/jwt";
 @Injectable()
 export class PostService {
 
-    async createPost(userId: number, createPostDTO: CreatePostDTO): Promise<Posts> {
+    async createPost(userId: number, createPostDTO: CreatePostDTO, status?: string): Promise<Posts> {
                
-        const newPost = await Posts.create({...createPostDTO, userId});
-        return newPost;
+        if (status) {
+            const newPost = await Posts.create({...createPostDTO, userId, status})
+            return newPost;
+        } else {
+            const newPost = await Posts.create({...createPostDTO, userId});            
+            return newPost;
+        }
+        
     }
 
-    async deletePostById(idToBeDeleted: number): Promise<any> {
-        const PostToBeDeleted = Posts.findOne({
+
+    async deletePostById(idToBeDeleted: number): Promise<string> {
+        const PostToBeDeleted = await Posts.findOne({
             where: {
                 id: idToBeDeleted
             }
         });
-        (await PostToBeDeleted).destroy();
+    
+        if (!PostToBeDeleted) {
+            return 'not-found';
+        }
+    
+        await PostToBeDeleted.destroy();
+        return 'deleted';
     }
 
     async updatePost(postId: number, updatePostDTO: UpdatePostDTO): Promise<Posts> {

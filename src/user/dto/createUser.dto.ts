@@ -11,13 +11,6 @@ export class CreateUserDTO {
     username: string;
 
     @ApiProperty({
-        description: 'Users email',
-        type: String
-    })
-    @IsNotEmpty({ message: 'Email is required.'})
-    email: string;
-
-    @ApiProperty({
         description: 'Users password',
         type: String
     })

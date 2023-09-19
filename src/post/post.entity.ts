@@ -14,7 +14,6 @@ enum PostStatus {
 @Table
 export class Posts extends Model {
 
-
     @ApiProperty({
         description: 'Id of post creator',
         type: Number

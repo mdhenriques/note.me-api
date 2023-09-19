@@ -32,21 +32,6 @@ export class UserController {
         return await this.userService.getAllUsers();
     }
 
-    @UseGuards(AuthAdminGuard)
-    @Get(':username')
-    async getUserByUsername(@Param('username') username: string): Promise<{ id: number, email: string }> {
-        const user = await this.userService.findByUsername(username);
-
-        return { id: (await user).id, email: (await user).email};
-    }
-
-    @UseGuards(AuthAdminGuard)
-    @Get('id/:id')
-    async getUserById(@Param('id') id: number) {
-        const user = await this.userService.findById(id);
-
-        return { username: (await user).username, email: (await user).email };
-    }
 
     @UseGuards(AuthAdminGuard)
     @Delete(':id')

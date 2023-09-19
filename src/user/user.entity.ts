@@ -17,16 +17,6 @@ export class User extends Model {
     username: string;
 
     @ApiProperty({
-        description: 'Users email',
-        type: String
-    })
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    email: string;
-
-    @ApiProperty({
         description: 'Users password',
         type: String
     })
