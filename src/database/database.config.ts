@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import pg from 'pg';
-import { User } from "src/user/user.entity";
-import { Posts } from "src/post/post.entity";
+import { User } from "../user/user.entity";
+import { Posts } from "../post/post.entity";
 
 export const databaseProviders = [
   {
