@@ -1,7 +1,6 @@
 #.env
 .env
 
-auth/constants
 
 # compiled output
 /dist
