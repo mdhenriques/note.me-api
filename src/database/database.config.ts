@@ -10,12 +10,12 @@ export const databaseProviders = [
       const sequelize = new Sequelize({
         dialect: 'postgres',
         host: process.env.DB_HOST,
-        port: 5432, // A porta padrão do PostgreSQL
+        port: 5432, 
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
-        database: 'desafio3',
-        dialectModule: pg, //Necessário para o deploy na vercel
-        dialectOptions: { //Necessário para usar o servidor Postgre no Azure
+        database: process.env.DB_NAME,
+        dialectModule: pg, 
+        dialectOptions: { 
           ssl: {      require: true, 
           }
       }

@@ -20,11 +20,11 @@ export class ExtractUserIdMiddleware implements NestMiddleware {
       
 
       try {
-        const decodedToken: any = jwt.verify(token, jwtConstants.secret); // Substitua pelo seu segredo JWT real
-        console.log(decodedToken)
+        const decodedToken: any = jwt.verify(token, jwtConstants.secret);
+        
         if (decodedToken && decodedToken.id) {
-          req.userId = decodedToken.id; // Define o userId na solicitação
-          console.log(req.userId)
+          req.userId = decodedToken.id; 
+         
         }
       } catch (error) {
         console.log(error);
